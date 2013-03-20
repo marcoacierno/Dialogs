@@ -40,6 +40,7 @@ public OnPlayerConnect(playerid)
 public OnPlayerSpawn(playerid)
 {
     ShowPlayerDialog(playerid, "alloracomeva", DIALOG_STYLE_MSGBOX, "Tutto bene?", "Come stai?", "Bene", "Male");
+return 1;
 }
 
 Dialog:lalunghezzamaxedi20(playerid, listitem, inputtext[], response)
