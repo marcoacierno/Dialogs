@@ -3,18 +3,20 @@
 	* Autore: ReVo_
 	* Github: https://github.com/rrev
 	
-	* Version: 1.00
+	* Version: 1.01
 	* Changelog:
+	*   1.01:
+	*	_dialogs_DEBUG, _dialogs_MAX_FUNC_NAME
 	*   1.00:
 	*       Prima versione
 	
 */
-#define MAX_FUNC_NAME       25
-//#define DEBUG
+#define _dialogs_MAX_FUNC_NAME       25
+//#define _dialogs_DEBUG
 
-new DIALOGS_PlayerDialog[MAX_PLAYERS][MAX_FUNC_NAME];
+new DIALOGS_PlayerDialog[MAX_PLAYERS][_dialogs_MAX_FUNC_NAME];
 
-stock ShowPlayerDialogEx(playerid, function[MAX_FUNC_NAME], style, caption[], info[], button1[], button2[])
+stock ShowPlayerDialogEx(playerid, function[_dialogs_MAX_FUNC_NAME], style, caption[], info[], button1[], button2[])
 {
 	//if (strlen(function) > MAX_FUNC_NAME) return 0; pawn da un errore se si supera questo limite
 
@@ -31,26 +33,26 @@ stock ShowPlayerDialogEx(playerid, function[MAX_FUNC_NAME], style, caption[], in
 
 public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	//la gamemode non ha ancor afatto vedere nessun td oppure è capito il bug del riavvio del server
+	//la gamemode non ha ancor afatto vedere nessun td oppure Ã¨ capito il bug del riavvio del server
 	//in questo caso non fa nnt
 	if (DIALOGS_PlayerDialog[playerid][0] == '\0') {
 	    return 0;//ritorno 0 manda il dialog a qualche altro script
 	}
 
 	//CallLocalFunction crasha quando viene passata una stringa vuota
-	// controllo se è vuota '\0' ultimo carattere è metto uno spazio vuoto
+	// controllo se Ã¨ vuota '\0' ultimo carattere Ã¨ metto uno spazio vuoto
 	if (inputtext[0] == '\0') { // is null
 	    inputtext[0] = ' ';
 	}
 	
-	#if defined DEBUG
+	#if defined _dialogs_DEBUG
 	printf("OnDialogResponse(%d, %d, %d, %d, %s)", playerid, dialogid, response, listitem, inputtext);
 	#endif
 	
 	new sz[31];
 	format(sz, sizeof sz, "DIALOGS_%s", DIALOGS_PlayerDialog[playerid]);
 
-	#if defined DEBUG
+	#if defined _dialogs_DEBUG
 	printf("Player Function: %s - Will be called: %s", DIALOGS_PlayerDialog[playerid], sz);
 	#endif
 	
@@ -67,4 +69,3 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 #define OnDialogResponse dialogs_OnDialogResponse
 forward dialogs_OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]);
-
