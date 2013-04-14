@@ -3,8 +3,10 @@
 	* Autore: ReVo_
 	* Github: https://github.com/rrev
 	
-	* Version: 1.02 beta-1
+	* Version: 1.02 beta-2
 	* Changelog:
+	*   1.02-beta2:
+	*       Aggiunto Dialog_ReopenDiff che ti permette di riaprire l'ultimo dialog modificando tutte o parte delle informazioni del dialogo precedente
 	*	1.02-beta1:
 	*		Aggiunto Dialog_Reopen(playerid) per riaprire l'ultimo dialog
 	*   1.01:
@@ -49,8 +51,48 @@ stock ShowPlayerDialogEx(playerid, function[MAX_DIALOG_FUNCTION_SIZE], style, ca
 	return 1;
 }
 
+/**
+ * Riapre l'ultimo dialog mostrato
+ * Reshow the last dalog
+ */
+ 
 stock Dialog_Reopen(playerid)
 {
+	ShowPlayerDialog(playerid, _dialogs_pDialog [playerid][dialogs_Function], _dialogs_pDialog [playerid][dialogs_style], _dialogs_pDialog [playerid][dialogs_caption], _dialogs_pDialog [playerid][dialogs_info], _dialogs_pDialog [playerid][dialogs_button1], _dialogs_pDialog [playerid][dialogs_button2]);
+	return 1;
+}
+
+/**
+ * Riapre l'ultimo dialog mostrato ma richiama una funzione diversa o un altro parametro
+ * Reshow the last dalog but with a different function or dialog-info
+ */
+
+stock Dialog_ReopenDiff(playerid, function[MAX_DIALOG_FUNCTION_SIZE] = '\0', style = -1, caption[MAX_DIALOG_CAPTION_SIZE] = '\0', info[MAX_DIALOG_INFO_SIZE] = '\0', button1[MAX_DIALOG_BUTTON_SIZE] = '\0', button2[MAX_DIALOG_BUTTON_SIZE] = '\0')
+{
+    if (function[0] != '\0') {
+        _dialogs_pDialog [playerid][dialogs_Function] = function;
+    }
+    
+    if (style != -1) {
+        _dialogs_pDialog [playerid][dialogs_style] = style;
+    }
+
+    if (info[0] != '\0') {
+        _dialogs_pDialog [playerid][dialogs_info] = info;
+    }
+
+    if (caption[0] != '\0') {
+        _dialogs_pDialog [playerid][dialogs_caption] = caption;
+    }
+
+    if (button1[0] != '\0') {
+        _dialogs_pDialog [playerid][dialogs_button1] = button1;
+    }
+
+    if (button2[0] != '\0') {
+        _dialogs_pDialog [playerid][dialogs_button2] = button2;
+    }
+    
 	ShowPlayerDialog(playerid, _dialogs_pDialog [playerid][dialogs_Function], _dialogs_pDialog [playerid][dialogs_style], _dialogs_pDialog [playerid][dialogs_caption], _dialogs_pDialog [playerid][dialogs_info], _dialogs_pDialog [playerid][dialogs_button1], _dialogs_pDialog [playerid][dialogs_button2]);
 	return 1;
 }
@@ -63,14 +105,14 @@ stock Dialog_Reopen(playerid)
 
 public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	//la gamemode non ha ancor afatto vedere nessun td oppure è capito il bug del riavvio del server
+	//la gamemode non ha ancor afatto vedere nessun td oppure Ã¨ capito il bug del riavvio del server
 	//in questo caso non fa nnt
 	if (_dialogs_pDialog [playerid][dialogs_Function][0] == '\0') {
 	    return 0;//ritorno 0 manda il dialog a qualche altro script
 	}
 
 	//CallLocalFunction crasha quando viene passata una stringa vuota
-	// controllo se è vuota '\0' ultimo carattere è metto uno spazio vuoto
+	// controllo se Ã¨ vuota '\0' ultimo carattere Ã¨ metto uno spazio vuoto
 	if (inputtext[0] == '\0') { // is null
 	    inputtext[0] = ' ';
 	}
