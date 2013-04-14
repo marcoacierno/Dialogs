@@ -9,9 +9,9 @@ main()
 	print("\n----------------------------------");
 	print("  This is a blank GameModeScript");
 	print("----------------------------------\n");
-	
+
 	//printf("GetVehicleComponentType %u",GetVehicleComponentType(1100));
-	
+
 }
 
 public OnGameModeInit()
@@ -43,7 +43,6 @@ public OnPlayerSpawn(playerid)
    // ShowPlayerDialog(playerid, "alloracomeva", DIALOG_STYLE_MSGBOX, "Tutto bene?", "Come stai?", "Bene", "Male");
 }
 
-
 public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
     return 0;
@@ -62,8 +61,15 @@ Dialog:TestDialog(playerid, listitem, inputtext[], response)
 	}
 	else {
 	    print ("No");
+	    Dialog_ReopenDiff (playerid, .style = DIALOG_STYLE_INPUT, .function = "CloseYes");
 	}
 	return true;
+}
+
+Dialog:CloseYes(playerid, listitem, inputtext[], response)
+{
+	SendClientMessage (playerid, -1, "Good bye!");
+	return 1;
 }
 
 Dialog:lalunghezzamaxedi20(playerid, listitem, inputtext[], response)
@@ -71,7 +77,7 @@ Dialog:lalunghezzamaxedi20(playerid, listitem, inputtext[], response)
 	new sz[40];
 	format(sz, sizeof sz, "Hai cliccato sulla regola #%d !", listitem);
 	SendClientMessage(playerid, -1, sz);
-	
+
 	if (response)
 	{
 	    SendClientMessage(playerid, -1, "fa piacere!");
@@ -103,3 +109,4 @@ Dialog:alloracomeva(playerid, listitem, inputtext[], response)
 	}
 	return 1;
 }
+
