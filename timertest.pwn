@@ -1,5 +1,6 @@
 #include <a_samp>
 #include <dialogs>
+#include <zcmd>
 
 forward OneSecTimer();
 
@@ -25,22 +26,44 @@ public OnGameModeInit()
 }
 
 public OneSecTimer() {
-	new sText[256];
-	format(sText,sizeof(sText),"GetTickCount = %d",GetTickCount());
+//	new sText[256];
+//	format(sText,sizeof(sText),"GetTickCount = %d",GetTickCount());
 //	print(sText);
-	SendClientMessageToAll(0xFF0000, sText);
+//	SendClientMessageToAll(0xFF0000, sText);
 }
 
 public OnPlayerConnect(playerid)
 {
-    ShowPlayerDialog(playerid, "lalunghezzamaxedi20", DIALOG_STYLE_LIST, "Regole", "Non usare cheats\nNon imbrogliare\nNon nominare il nome di dio invano\nblabla", "Accetto", "Rifiuto");
+   // ShowPlayerDialog(playerid, "lalunghezzamaxedi20", DIALOG_STYLE_LIST, "Regole", "Non usare cheats\nNon imbrogliare\nNon nominare il nome di dio invano\nblabla", "Accetto", "Rifiuto");
 	return 1;
 }
 
 public OnPlayerSpawn(playerid)
 {
-    ShowPlayerDialog(playerid, "alloracomeva", DIALOG_STYLE_MSGBOX, "Tutto bene?", "Come stai?", "Bene", "Male");
-return 1;
+   // ShowPlayerDialog(playerid, "alloracomeva", DIALOG_STYLE_MSGBOX, "Tutto bene?", "Come stai?", "Bene", "Male");
+}
+
+
+public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
+{
+    return 0;
+}
+
+COMMAND:dialog_reopen(playerid, params[]) {
+	ShowPlayerDialog (playerid, "TestDialog", DIALOG_STYLE_MSGBOX, "Riaprire", "Vuoi riaprire questo dialog?", "Si", "No");
+	return true;
+}
+
+Dialog:TestDialog(playerid, listitem, inputtext[], response)
+{
+	if (response) {
+	    print ("Si");
+		Dialog_Reopen(playerid);
+	}
+	else {
+	    print ("No");
+	}
+	return true;
 }
 
 Dialog:lalunghezzamaxedi20(playerid, listitem, inputtext[], response)
@@ -52,6 +75,7 @@ Dialog:lalunghezzamaxedi20(playerid, listitem, inputtext[], response)
 	if (response)
 	{
 	    SendClientMessage(playerid, -1, "fa piacere!");
+		Dialog_Reopen(playerid);
 	}
 	else
 	{
